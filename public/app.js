@@ -1,5 +1,6 @@
 const productsContainer = document.getElementById("products");
 const cartContainer = document.getElementById("cart");
+const cartTotal = document.getElementById("cart-total");
 
 async function fetchProducts() {
   try {
@@ -22,6 +23,7 @@ async function fetchCart() {
   } catch (error) {
     console.error("Error loading cart:", error);
     cartContainer.innerHTML = "<p>Failed to load cart.</p>";
+    cartTotal.textContent = "Total: $0.00";
   }
 }
 
@@ -49,10 +51,15 @@ function renderCart(items) {
 
   if (items.length === 0) {
     cartContainer.innerHTML = `<p class="empty-cart">Your cart is empty.</p>`;
+    cartTotal.textContent = "Total: $0.00";
     return;
   }
 
+  let total = 0;
+
   items.forEach((item) => {
+    total += item.price * item.quantity;
+
     const div = document.createElement("div");
     div.className = "cart-item";
 
@@ -61,10 +68,17 @@ function renderCart(items) {
       <h3>${item.name}</h3>
       <p>Price: $${item.price}</p>
       <p>Quantity: ${item.quantity}</p>
+      <div class="cart-controls">
+        <button onclick="changeQuantity(${item.id}, ${item.quantity + 1})">+1</button>
+        <button onclick="changeQuantity(${item.id}, ${item.quantity - 1})">-1</button>
+        <button onclick="removeFromCart(${item.id})">Remove</button>
+      </div>
     `;
 
     cartContainer.appendChild(div);
   });
+
+  cartTotal.textContent = `Total: $${total.toFixed(2)}`;
 }
 
 async function addToCart(productId) {
@@ -83,6 +97,40 @@ async function addToCart(productId) {
     fetchCart();
   } catch (error) {
     console.error("Error adding to cart:", error);
+  }
+}
+
+async function changeQuantity(cartId, newQuantity) {
+  if (newQuantity < 1) {
+    return;
+  }
+
+  try {
+    await fetch(`/api/cart/${cartId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        quantity: newQuantity
+      })
+    });
+
+    fetchCart();
+  } catch (error) {
+    console.error("Error updating quantity:", error);
+  }
+}
+
+async function removeFromCart(cartId) {
+  try {
+    await fetch(`/api/cart/${cartId}`, {
+      method: "DELETE"
+    });
+
+    fetchCart();
+  } catch (error) {
+    console.error("Error removing item:", error);
   }
 }
 

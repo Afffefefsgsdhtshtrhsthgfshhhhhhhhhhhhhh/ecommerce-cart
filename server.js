@@ -111,7 +111,41 @@ app.post("/api/cart", (req, res) => {
     }
   });
 });
+// 修改购物车数量
+app.put("/api/cart/:id", (req, res) => {
+  const { id } = req.params;
+  const { quantity } = req.body;
 
+  if (!quantity || quantity < 1) {
+    return res.status(400).json({ error: "Quantity must be at least 1" });
+  }
+
+  const sql = "UPDATE cart_items SET quantity = ? WHERE id = ?";
+
+  db.query(sql, [quantity, id], (err, results) => {
+    if (err) {
+      console.error("Failed to update cart item:", err);
+      return res.status(500).json({ error: "Failed to update cart item" });
+    }
+
+    res.json({ message: "Cart item updated successfully" });
+  });
+});
+// 删除购物车商品
+app.delete("/api/cart/:id", (req, res) => {
+  const { id } = req.params;
+
+  const sql = "DELETE FROM cart_items WHERE id = ?";
+
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error("Failed to delete cart item:", err);
+      return res.status(500).json({ error: "Failed to delete cart item" });
+    }
+
+    res.json({ message: "Cart item removed successfully" });
+  });
+});
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

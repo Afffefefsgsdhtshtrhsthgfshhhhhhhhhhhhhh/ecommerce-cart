@@ -69,3 +69,17 @@ button:hover {
   color: #777;
   font-style: italic;
 }
+.cart-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.cart-controls button {
+  margin-top: 0;
+}
+
+#cart-total {
+  margin-top: 20px;
+}
