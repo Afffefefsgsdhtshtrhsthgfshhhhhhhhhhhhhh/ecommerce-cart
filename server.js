@@ -47,15 +47,23 @@ app.get("/api/products", (req, res) => {
 // 读取购物车
 app.get("/api/cart", (req, res) => {
   const sql = `
-    SELECT cart_items.id, cart_items.quantity, products.name, products.price, products.image
+    SELECT 
+      cart_items.id AS id,
+      cart_items.quantity AS quantity,
+      products.name AS name,
+      products.price AS price,
+      products.image AS image
     FROM cart_items
-    JOIN products ON cart_items.product_id = products.id
+    INNER JOIN products ON cart_items.product_id = products.id
   `;
 
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Failed to fetch cart items:", err);
-      return res.status(500).json({ error: "Failed to fetch cart items" });
+      return res.status(500).json({
+        error: "Failed to fetch cart items",
+        details: err.message
+      });
     }
 
     res.json(results);
