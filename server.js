@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// 读取所有商品
+// Read all cards
 app.get("/api/products", (req, res) => {
   const sql = "SELECT * FROM products";
 
@@ -44,7 +44,7 @@ app.get("/api/products", (req, res) => {
   });
 });
 
-// 读取购物车
+// Read cart
 app.get("/api/cart", (req, res) => {
   const sql = `
     SELECT 
@@ -52,7 +52,8 @@ app.get("/api/cart", (req, res) => {
       cart_items.quantity AS quantity,
       products.name AS name,
       products.price AS price,
-      products.image AS image
+      products.image AS image,
+      products.description AS description
     FROM cart_items
     INNER JOIN products ON cart_items.product_id = products.id
   `;
@@ -70,7 +71,7 @@ app.get("/api/cart", (req, res) => {
   });
 });
 
-// 加入购物车
+// Add to cart
 app.post("/api/cart", (req, res) => {
   const { productId, quantity } = req.body;
 
@@ -87,7 +88,8 @@ app.post("/api/cart", (req, res) => {
     }
 
     if (results.length > 0) {
-      const updateSql = "UPDATE cart_items SET quantity = quantity + ? WHERE product_id = ?";
+      const updateSql =
+        "UPDATE cart_items SET quantity = quantity + ? WHERE product_id = ?";
 
       db.query(updateSql, [quantity, productId], (err2) => {
         if (err2) {
@@ -98,7 +100,8 @@ app.post("/api/cart", (req, res) => {
         res.json({ message: "Cart updated successfully" });
       });
     } else {
-      const insertSql = "INSERT INTO cart_items (product_id, quantity) VALUES (?, ?)";
+      const insertSql =
+        "INSERT INTO cart_items (product_id, quantity) VALUES (?, ?)";
 
       db.query(insertSql, [productId, quantity], (err3) => {
         if (err3) {
@@ -111,7 +114,8 @@ app.post("/api/cart", (req, res) => {
     }
   });
 });
-// 修改购物车数量
+
+// Update cart quantity
 app.put("/api/cart/:id", (req, res) => {
   const { id } = req.params;
   const { quantity } = req.body;
@@ -122,7 +126,7 @@ app.put("/api/cart/:id", (req, res) => {
 
   const sql = "UPDATE cart_items SET quantity = ? WHERE id = ?";
 
-  db.query(sql, [quantity, id], (err, results) => {
+  db.query(sql, [quantity, id], (err) => {
     if (err) {
       console.error("Failed to update cart item:", err);
       return res.status(500).json({ error: "Failed to update cart item" });
@@ -131,13 +135,14 @@ app.put("/api/cart/:id", (req, res) => {
     res.json({ message: "Cart item updated successfully" });
   });
 });
-// 删除购物车商品
+
+// Delete cart item
 app.delete("/api/cart/:id", (req, res) => {
   const { id } = req.params;
 
   const sql = "DELETE FROM cart_items WHERE id = ?";
 
-  db.query(sql, [id], (err, results) => {
+  db.query(sql, [id], (err) => {
     if (err) {
       console.error("Failed to delete cart item:", err);
       return res.status(500).json({ error: "Failed to delete cart item" });
@@ -146,6 +151,7 @@ app.delete("/api/cart/:id", (req, res) => {
     res.json({ message: "Cart item removed successfully" });
   });
 });
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

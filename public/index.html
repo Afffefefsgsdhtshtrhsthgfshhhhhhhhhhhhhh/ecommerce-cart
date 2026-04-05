@@ -3,24 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Commerce Cart</title>
+  <title>CardVault TCG Shop</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>My E-Commerce Cart Project</h1>
 
-  <div class="container">
-    <section class="products-section">
-      <h2>Products</h2>
-      <div id="products"></div>
+
+  <main class="page">
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-tag">TCG Marketplace</span>
+        <h2>Build your collection, one rare card at a time</h2>
+        <p>
+          Browse premium singles, add cards to your cart, update quantities,
+          and manage your order in one smooth single-page shopping experience.
+        </p>
+      </div>
     </section>
 
-    <section class="cart-section">
-  <h2>Shopping Cart</h2>
-  <div id="cart"></div>
-  <h3 id="cart-total">Total: $0.00</h3>
-</section>
-  </div>
+    <div class="main-layout">
+      <section class="products-section">
+        <div class="section-heading">
+          <h2>Featured Singles</h2>
+          <p>Popular cards from the latest drop.</p>
+        </div>
+        <div id="products"></div>
+      </section>
+
+      <aside class="cart-section">
+        <div class="cart-box">
+          <div class="cart-header">
+            <h2>Deck Cart</h2>
+            <p>Your selected cards and quantities.</p>
+          </div>
+
+          <div id="cart"></div>
+
+          <div class="cart-footer">
+            <h3 id="cart-total">Total: $0.00</h3>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
 
   <script src="app.js"></script>
 </body>

@@ -20,8 +20,9 @@ CREATE TABLE cart_items (
 );
 
 INSERT INTO products (name, price, image, description) VALUES
-('Wireless Mouse', 25.99, 'https://via.placeholder.com/150', 'Comfortable wireless mouse'),
-('Mechanical Keyboard', 79.99, 'https://via.placeholder.com/150', 'RGB mechanical keyboard'),
-('USB-C Hub', 39.99, 'https://via.placeholder.com/150', 'Multi-port USB-C hub'),
-('Laptop Stand', 29.99, 'https://via.placeholder.com/150', 'Adjustable aluminum laptop stand'),
-('Noise Cancelling Headphones', 129.99, 'https://via.placeholder.com/150', 'Over-ear noise cancelling headphones');
+('Luffy Manga Gear 5', 3633.33, '/web-images/luffy-gear5.jpg', 'One Piece Trading Card Game'),
+('Mega Charizard', 999.99, '/web-images/mega-charizard ex.jpg', 'Pokemon Trading Card Game'),
+('Mega Gengar', 329.25, '/web-images/mega-gengar.jpg', 'Pokemon Trading Card Game'),
+('Pikachu', 176.62, '/web-images/pikachu.jpg', 'Pokemon Trading Card Game'),
+('Luffy Manga', 1921.24, '/web-images/luffy-manga.jpg', 'One Piece Trading Card Game'),
+('Blazing Dragon', 41.25, '/web-images/blazing-dragon.jpg', 'Yu-Gi-Oh! Trading Card Game');
