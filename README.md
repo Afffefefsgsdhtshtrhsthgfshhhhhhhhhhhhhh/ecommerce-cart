@@ -70,3 +70,45 @@ ecommerce-cart/
 ├── package-lock.json
 ├── README.md
 └── server.js
+
+How to Run the Project
+
+Download or clone the project files
+Open the project folder in VS Code
+Run npm install
+Create a local .env file based on .env.example
+Make sure MySQL Server is running
+Open MySQL Workbench
+Run the SQL script in db/schema.sql
+Start the server with npm run dev
+Open http://localhost:3000 in the browser
+Database Setup
+
+The database setup file is included in:
+
+db/schema.sql
+
+This file contains:
+
+database creation
+table creation
+initial TCG product data
+Image Files
+
+Product images are stored locally inside:
+
+public/web-images
+
+These files are required for the product cards to display correctly.
+
+Challenges Faced
+
+One of the challenges was to correctly connect the front-end, back-end and MySQL database in order to dynamically update the product and shopping cart data. During this operation, some connection failure issues were encountered. Another challenge is that during the production period, there were some issues with GitHub's transmission, and the new update data could not be synchronized to the GitHub repository.
+
+Final Outcome
+
+The final website is a TCG-themed shopping cart application that allows users to browse collectible card products and interact with the cart in a dynamic way. It satisfies the main technical requirements of a single-page dynamic website with database CRUD operations.
+
+Notes
+The real .env file is not included in the public repository for security reasons.
+Use .env.example as a template when setting up the project locally.
